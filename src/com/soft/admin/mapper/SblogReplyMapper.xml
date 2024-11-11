@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.soft.admin.dao.ISblogReplyDao">
+
+	<insert id="addSblogReply" parameterType="SblogReply">
+		<![CDATA[
+			insert into sblog_reply
+				values(null,#{sblog_id},#{user_id},#{reply_content},#{reply_date})
+		]]>
+	</insert>
+
+	<delete id="delSblogReply" parameterType="int">
+		<![CDATA[
+			delete from sblog_reply where sblog_reply_id=#{sblog_reply_id}
+		]]>
+	</delete>
+
+	<delete id="delSblogReplys" parameterType="int">
+		<![CDATA[
+			delete from sblog_reply where sblog_reply_id in 
+		]]>
+		<foreach collection="array" item="sblog_reply_ids"  open="(" separator="," close=")">
+			#{sblog_reply_ids}
+		</foreach>
+	</delete>
+
+	<update id="updateSblogReply" parameterType="SblogReply">
+		<![CDATA[
+			UPDATE sblog_reply
+			  set
+		]]>
+		<![CDATA[
+			where sblog_reply_id = #{sblog_reply_id}
+		]]>
+	</update>
+
+	<select id="getSblogReply" parameterType="SblogReply" resultType="SblogReply">
+		<![CDATA[
+			SELECT s.*,u.user_name FROM sblog_reply s
+			  left join member u on s.user_id=u.user_id
+		]]>
+		<where>
+			<if test="sblog_reply_id!=0">
+			<![CDATA[
+				sblog_reply_id = #{sblog_reply_id}
+			]]>
+			</if>
+		</where>
+	</select>
+
+	<select id="listSblogReplys" parameterType="SblogReply" resultType="SblogReply">
+		<![CDATA[
+			SELECT * FROM (
+			SELECT s.*,u.user_name FROM sblog_reply s
+			  left join member u on s.user_id=u.user_id
+		]]>
+		<where>
+			<if test="sblog_reply_id!=0">
+			<![CDATA[
+				sblog_reply_id = #{sblog_reply_id}
+			]]>
+			</if>
+			<if test="sblog_id!=0">
+			<![CDATA[
+				and sblog_id = #{sblog_id}
+			]]>
+			</if>
+		</where>
+		<![CDATA[
+			order by reply_date asc,sblog_reply_id asc) t
+		]]>
+		<if test="start!=-1">
+		<![CDATA[
+			Limit ${start},${limit}
+		]]>
+		</if>
+	</select>
+
+	<select id="listSblogReplysCount" parameterType="SblogReply" resultType="int">
+		<![CDATA[
+			SELECT count(*) FROM sblog_reply
+		]]>
+		<where>
+			<if test="sblog_reply_id!=0">
+			<![CDATA[
+				sblog_reply_id = #{sblog_reply_id}
+			]]>
+			</if>
+			<if test="sblog_id!=0">
+			<![CDATA[
+				and sblog_id = #{sblog_id}
+			]]>
+			</if>
+		</where>
+	</select>
+
+</mapper>

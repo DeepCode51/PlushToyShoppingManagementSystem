@@ -1,0 +1,8 @@
+@charset "utf-8";
+/* CSS Document */
+body{ text-align:center; padding-top:5px;}
+table{ width:99%; margin:0px auto; text-align:center; border-top:1px solid #B6D9FE; border-left:1px solid #B6D9FE;}
+table tr th{ font-size:12px; text-align:left; color:#4376AD;background:#B6D9FE; padding:3px;}
+table tr td{ font-size:12px; text-align:left; color:#4376AD;border-bottom:1px solid #B6D9FE; padding:3px;border-right:1px solid #B6D9FE; }
+
+

@@ -1,0 +1,90 @@
+#product_menu{
+	float:left;
+	margin-top:5px;
+	width:200px;
+	height:510px;
+	border:1px solid #dc851b;
+	overflow:hidden;
+	overflow-y:auto;
+}
+#product_menu .ptable_menu{
+	margin:0px;
+	padding:0px;
+	width:200px;
+	border:0px;
+	border-collapse: collapse;
+	overflow:hidden;
+	overflow-y:auto;
+}
+#product_menu .ptable_menu_title td{
+	height:50px;
+	font-size:16px;
+	font-weight:bold;
+	color:white;
+	background-color:#dc851b;
+	text-align:center;
+}
+#product_menu .ptable_menu_text td{
+	line-height:50px;
+	color:#dc851b;
+	font-size:14px;
+	font-weight:bold;
+	text-align:center;
+}
+
+#product_info{
+	float:left;
+	margin-top:5px;
+	margin-left:5px;
+	width:746px;
+	height:510px;
+	border:1px solid #dc851b;
+	overflow:hidden;
+	overflow-y:auto;
+}
+
+#product_info  .title{
+	line-height:50px;
+	width:736px;
+	margin-left:10px;
+	color:#A88D5A;
+	font-size:14px;
+	font-weight:bold;
+	overflow:hidden;
+}
+
+#product_info form{
+	width:736px;
+}
+
+#product_info .ptable{
+	width:720px;
+	margin-left:10px;
+	border:0px;
+	border-collapse: collapse;
+}
+
+#product_info  .ptable .head_text {
+	font-weight:bold;
+} 
+
+#product_info .ptable td{
+	padding:5px;
+	height:25px;
+	border:1px solid #dc851b;
+	overflow:hidden;
+}
+
+#product_info .KEEdit td{
+	clear:both;
+	border: 0;
+	margin: 0;
+	padding: 2px 5px;
+}
+
+#product_info  .pages{
+	width:720px;
+	text-align:right;
+	margin-left:10px;
+}
+

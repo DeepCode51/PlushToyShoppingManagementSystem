@@ -1,0 +1,173 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.soft.admin.dao.IOrdersDetailDao">
+
+	<insert id="addOrdersDetail" parameterType="OrdersDetail">
+		<![CDATA[
+			insert into orders_detail
+				values(null,#{orders_no},#{goods_id},#{goods_name},#{goods_price},#{goods_count},#{goods_money})
+		]]>
+	</insert>
+
+	<delete id="delOrdersDetail" parameterType="int">
+		<![CDATA[
+			delete from orders_detail where detail_id=#{detail_id}
+		]]>
+	</delete>
+
+	<delete id="delOrdersDetails" parameterType="int">
+		<![CDATA[
+			delete from orders_detail where detail_id in 
+		]]>
+		<foreach collection="array" item="detail_ids"  open="(" separator="," close=")">
+			#{detail_ids}
+		</foreach>
+	</delete>
+
+	<update id="updateOrdersDetail" parameterType="OrdersDetail">
+		<![CDATA[
+			UPDATE orders_detail
+			  set
+			  goods_price = #{goods_price},goods_count = #{goods_count},goods_money = #{goods_money}
+		]]>
+		<![CDATA[
+			where detail_id = #{detail_id}
+		]]>
+	</update>
+
+	<select id="getOrdersDetail" parameterType="OrdersDetail" resultType="OrdersDetail">
+		<![CDATA[
+			SELECT od.*,o.user_id,o.real_name,o.orders_money FROM orders_detail od join orders o on od.orders_no=o.orders_no
+		]]>
+		<where>
+			<if test="detail_id!=0">
+			<![CDATA[
+				detail_id = #{detail_id}
+			]]>
+			</if>
+		</where>
+	</select>
+
+	<select id="listOrdersDetails" parameterType="OrdersDetail" resultType="OrdersDetail">
+		<![CDATA[
+			SELECT * FROM (
+			SELECT od.*,o.user_id,o.real_name,o.orders_money FROM orders_detail od join orders o on od.orders_no=o.orders_no
+		]]>
+		<where>
+			<if test="detail_id!=0">
+			<![CDATA[
+				detail_id = #{detail_id}
+			]]>
+			</if>
+			<if test="orders_no!=null and orders_no!=''">
+			<![CDATA[
+				and od.orders_no like '%${orders_no}%'
+			]]>
+			</if>
+		</where>
+		<![CDATA[
+			order by detail_id asc) t
+		]]>
+		<if test="start!=-1">
+		<![CDATA[
+			Limit ${start},${limit}
+		]]>
+		</if>
+	</select>
+
+	<select id="listOrdersDetailsCount" parameterType="OrdersDetail" resultType="int">
+		<![CDATA[
+			SELECT count(*) FROM orders_detail od join orders o on od.orders_no=o.orders_no
+		]]>
+		<where>
+			<if test="detail_id!=0">
+			<![CDATA[
+				detail_id = #{detail_id}
+			]]>
+			</if>
+			<if test="orders_no!=null and orders_no!=''">
+			<![CDATA[
+				and od.orders_no like '%${orders_no}%'
+			]]>
+			</if>
+		</where>
+	</select>
+	
+	<select id="listOrdersDetailsSum" parameterType="OrdersDetail" resultType="OrdersDetail">
+		<![CDATA[
+			SELECT * FROM (
+			SELECT od.goods_name,sum(goods_count) goods_count, round(sum(goods_money),1) goods_money
+			 FROM orders_detail od join orders o on od.orders_no=o.orders_no
+		]]>
+		<where>
+			<if test="detail_id!=0">
+			<![CDATA[
+				detail_id = #{detail_id}
+			]]>
+			</if>
+			<if test="orders_no!=null and orders_no!=''">
+			<![CDATA[
+				and od.orders_no like '%${orders_no}%'
+			]]>
+			</if>
+			<if test="goods_name!=null and goods_name!=''">
+			<![CDATA[
+				and goods_name like '%${goods_name}%'
+			]]>
+			</if>
+			<if test="orders_date_min!=null and orders_date_min!=''">
+			<![CDATA[
+				and orders_date >= #{orders_date_min}
+			]]>
+			</if>
+			<if test="orders_date_max!=null and orders_date_max!=''">
+			<![CDATA[
+				and orders_date <= #{orders_date_max}
+			]]>
+			</if>
+		</where>
+		<![CDATA[
+			group by od.goods_name
+			order by sum(goods_count) desc, od.goods_name asc) t
+		]]>
+		<if test="start!=-1">
+		<![CDATA[
+			Limit ${start},${limit}
+		]]>
+		</if>
+	</select>
+
+	<select id="listOrdersDetailsSumCount" parameterType="OrdersDetail" resultType="int">
+		<![CDATA[
+			SELECT count(distinct goods_id) FROM orders_detail od join orders o on od.orders_no=o.orders_no
+		]]>
+		<where>
+			<if test="detail_id!=0">
+			<![CDATA[
+				detail_id = #{detail_id}
+			]]>
+			</if>
+			<if test="orders_no!=null and orders_no!=''">
+			<![CDATA[
+				and od.orders_no like '%${orders_no}%'
+			]]>
+			</if>
+			<if test="goods_name!=null and goods_name!=''">
+			<![CDATA[
+				and goods_name like '%${goods_name}%'
+			]]>
+			</if>
+			<if test="orders_date_min!=null and orders_date_min!=''">
+			<![CDATA[
+				and orders_date >= #{orders_date_min}
+			]]>
+			</if>
+			<if test="orders_date_max!=null and orders_date_max!=''">
+			<![CDATA[
+				and orders_date <= #{orders_date_max}
+			]]>
+			</if>
+		</where>
+	</select>
+
+</mapper>

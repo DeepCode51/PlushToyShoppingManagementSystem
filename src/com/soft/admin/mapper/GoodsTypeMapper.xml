@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.soft.admin.dao.IGoodsTypeDao">
+
+	<insert id="addGoodsType" parameterType="GoodsType">
+		<![CDATA[
+			insert into goods_type
+				values(null,#{goods_type_name})
+		]]>
+	</insert>
+
+	<delete id="delGoodsType" parameterType="int">
+		<![CDATA[
+			delete from goods_type where goods_type_id=#{goods_type_id}
+		]]>
+	</delete>
+
+	<delete id="delGoodsTypes" parameterType="int">
+		<![CDATA[
+			delete from goods_type where goods_type_id in 
+		]]>
+		<foreach collection="array" item="goods_type_ids"  open="(" separator="," close=")">
+			#{goods_type_ids}
+		</foreach>
+	</delete>
+
+	<update id="updateGoodsType" parameterType="GoodsType">
+		<![CDATA[
+			UPDATE goods_type
+			  set
+			  goods_type_name = #{goods_type_name}
+		]]>
+		<![CDATA[
+			where goods_type_id = #{goods_type_id}
+		]]>
+	</update>
+
+	<select id="getGoodsType" parameterType="GoodsType" resultType="GoodsType">
+		<![CDATA[
+			SELECT * FROM goods_type
+		]]>
+		<where>
+			<if test="goods_type_id!=0">
+			<![CDATA[
+				goods_type_id = #{goods_type_id}
+			]]>
+			</if>
+			<if test="goods_type_name!=null and goods_type_name!=''">
+			<![CDATA[
+				and goods_type_name = #{goods_type_name}
+			]]>
+			</if>
+		</where>
+	</select>
+
+	<select id="listGoodsTypes" parameterType="GoodsType" resultType="GoodsType">
+		<![CDATA[
+			SELECT * FROM (
+			SELECT * FROM goods_type
+		]]>
+		<where>
+			<if test="goods_type_id!=0">
+			<![CDATA[
+				goods_type_id = #{goods_type_id}
+			]]>
+			</if>
+			<if test="goods_type_name!=null and goods_type_name!=''">
+			<![CDATA[
+				and goods_type_name like '%${goods_type_name}%'
+			]]>
+			</if>
+		</where>
+		<![CDATA[
+			order by goods_type_id asc) t
+		]]>
+		<if test="start!=-1">
+		<![CDATA[
+			Limit ${start},${limit}
+		]]>
+		</if>
+	</select>
+
+	<select id="listGoodsTypesCount" parameterType="GoodsType" resultType="int">
+		<![CDATA[
+			SELECT count(*) FROM goods_type
+		]]>
+		<where>
+			<if test="goods_type_id!=0">
+			<![CDATA[
+				goods_type_id = #{goods_type_id}
+			]]>
+			</if>
+			<if test="goods_type_name!=null and goods_type_name!=''">
+			<![CDATA[
+				and goods_type_name like '%${goods_type_name}%'
+			]]>
+			</if>
+		</where>
+	</select>
+
+</mapper>

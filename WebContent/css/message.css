@@ -1,0 +1,285 @@
+.nav{
+	border-top:1px solid #dc851b;
+	border-bottom:1px solid #dc851b;
+	line-height:28px;
+	padding-left:10px;
+	color:#dc851b;
+}
+.messages{
+	margin-top:5px;
+	border:1px solid #d2d2d8;
+	background-color:#FBFEED;
+	overflow:hidden;
+}
+.messages2{
+	margin-top:5px;
+	border:1px solid #d2d2d8;
+	overflow:hidden;
+}
+.messagesInterval{
+	margin-top:5px;
+	height:40px;
+	background-image:url('../images/pking.jpg');
+	background-repeat:no-repeat;
+	overflow:hidden;
+}
+.messages_left{
+	float:left;
+	width:165px;
+	margin-top:0px;
+}
+.nickName{
+	margin-top:0px;
+	line-height:30px;
+	text-align:center;
+	font-weight:bold;
+	border-bottom: 1px dashed #d2d2d8;
+}
+.headphoto{
+	margin-top:0px;
+	line-height:70px;
+	text-align:center;
+	padding-top:5px;
+	border-radius:50%;
+}
+.headphoto img{
+	width:100px;
+	height:100px;
+	vertical-align:middle;
+}
+.stuNo{
+	margin-top:0px;
+	line-height:25px;
+	text-align:center;
+}
+.messages_right{
+	float:left;
+	width:780px;
+	border-left: 1px solid #d2d2d8;
+	min-height:220px; 
+	max-height:none; 
+}
+.time{
+	margin-top:0px;
+	line-height:30px;
+	padding-left:5px;
+	border-bottom: 1px dashed #d2d2d8;
+}
+.time a{
+	color:black;
+	text-decoration:none;
+}
+.time a:hover{
+	color:red;
+	text-decoration:none;
+}
+.pic{
+	margin-top:5px;
+	text-align:center;
+	padding:10px;
+}
+.pic img{
+	max-width:700px;
+ 	max-height:700px; 
+ 	/*width:expression_r(this.width > 200 ? "200px" : this.width);
+ 	height:expression_r(this.height > 200 ? "200px" : this.height);*/  
+}
+.title{
+	margin-top:5px;
+	margin-left:5px;
+	margin-bottom:5px;
+	padding-left:5px;
+	width:765px;
+	line-height:28px;
+	border: 0px solid #d2d2d8;
+}
+.sblog_title{
+	margin-top:5px;
+	margin-left:5px;
+	margin-bottom:5px;
+	padding-left:5px;
+	width:765px;
+	line-height:28px;
+	border: 0px solid #d2d2d8;
+}
+.reply{
+	margin-left:5px;
+	margin-bottom:5px;
+	padding:5px;
+	width:765px;
+	line-height:28px;
+}
+.reply .user {
+	line-height:28px;
+	color:red;
+}
+.reply .reply_con {
+	line-height:28px;
+	padding-left:20px;
+}
+.reply .reply_time {
+	line-height:28px;
+	padding-left:20px;
+	color:#666;
+}
+ 
+.messages_right hr{
+	margin-left:5px;
+	width:765px;
+	height:1px;
+	border:none;
+	border-top:1px dashed #d2d2d8;
+}
+
+#page{
+	margin-top:5px;
+	height:28px;
+	line-height:28px;
+	padding:5px;
+	border:1px solid #d2d2d8;
+	text-align:center;
+	background-color:#FBFEED;
+}
+#page   a{
+	text-decoration:none;
+	color:#666;
+}
+#page   a:hover{
+	text-decoration:underline;
+	color:red;
+}
+.inputstyle{
+    vertical-align:text-bottom;
+    font-size: 12px; 
+    color: #b54747;
+}
+.inputpagestyle{
+    width: 20px;
+    vertical-align:text-bottom;
+    color:gray;
+}
+.btnstyle
+{
+	CURSOR: pointer;
+	COLOR: white;
+	HEIGHT: 25px!important;
+	background-repeat: repeat-x;
+	border: 1px solid #079d49;
+	background-color:#21ba5c;
+	vertical-align:text-bottom;
+	border-radius: 5px 5px 5px 5px;
+}
+
+.reply_add{
+	margin-top:5px;
+	margin-bottom:15px;
+	width:100%;
+	border-collapse: collapse;
+}
+.reply_add td{
+	padding:5px;
+	border:1px solid #d2d2d8;
+}
+.reply_add .theme{
+	height:28px;
+	background-image:url('../images/wbg.gif');
+	font-weight:bold;
+}
+
+
+
+.tzTop{
+	margin-top:5px;
+	height:102px;
+	border:1px solid #94D5AA;
+}
+.tzPhoto{
+	float:left;
+	width:100px;
+	height:100px;
+	text-align:center;
+}
+.tzPhoto img{
+	vertical-align:middle;
+}
+.tzAdminTime{
+	float:left;
+	width:800px;
+	height:100px;
+	padding-left:10px;
+}
+.tzAdmin{
+	line-height:34px;
+	font-weight:bold;
+}
+.tzTime{
+	line-height:33px;
+	color:#666;
+}
+.tzTime a{
+	color:black;
+	text-decoration:none;
+}
+.tzTime a:hover{
+	color:red;
+	text-decoration:none;
+}
+.tzCon{
+	margin-top:5px;
+	text-align:left;
+	line-height:25px;
+	font-size: 14px; 
+	padding:10px;
+}
+.tzPic{
+	margin-top:5px;
+	text-align:center;
+	padding:10px;
+}
+
+.tzReplys{
+	margin-top:10px;
+	background-color:#F2FDFF;
+	border-top:1px solid #94D5AA;
+	border-bottom:1px solid #94D5AA;
+}
+.tzReply{
+	height:55px;
+	overflow:hidden;
+}
+.tzReply2{
+	padding-left:80px;
+	height:55px;
+	overflow:hidden;
+}
+.tzReply .photo,.tzReply2 .photo{
+	float:left;
+	width:80px;
+	height:50px;
+	text-align:center;
+}
+.tzReply .photo img,.tzReply2 .photo img{
+	width:50px;
+	vertical-align:middle;
+}
+.tzReply .replyConTime,.tzReply2 .replyConTime{
+	float:left;
+	width:700px;
+	height:75px;
+	padding-left:10px;
+}
+.tzReply .replyCon,.tzReply2 .replyCon{
+	line-height:25px;
+}
+.tzReply .replyTime,.tzReply2 .replyTime{
+	line-height:25px;
+	color:#666;
+}
+.tzReply a,.tzReply2 a{
+	color:black;
+	text-decoration:none;
+}
+.tzReply a:hover,.tzReply2 a:hover{
+	color:red;
+	text-decoration:none;
+}

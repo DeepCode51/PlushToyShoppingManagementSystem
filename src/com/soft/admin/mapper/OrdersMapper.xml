@@ -1,0 +1,185 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.soft.admin.dao.IOrdersDao">
+
+	<insert id="addOrders" parameterType="Orders">
+		<![CDATA[
+			insert into orders
+				values(null,#{orders_no},#{orders_date},#{user_id},#{real_name},#{user_address},#{user_phone},#{orders_money},#{user_discard},#{real_money},#{orders_flag},#{orders_note})
+		]]>
+	</insert>
+
+	<delete id="delOrders" parameterType="int">
+		<![CDATA[
+			delete from orders where orders_id=#{orders_id}
+		]]>
+	</delete>
+
+	<delete id="delOrderss" parameterType="int">
+		<![CDATA[
+			delete from orders where orders_id in 
+		]]>
+		<foreach collection="array" item="orders_ids"  open="(" separator="," close=")">
+			#{orders_ids}
+		</foreach>
+	</delete>
+
+	<update id="updateOrders" parameterType="Orders">
+		<![CDATA[
+			UPDATE orders
+		]]>
+		<set>
+			<if test="real_name!=null and real_name!=''">
+			<![CDATA[
+				real_name = #{real_name},
+			]]>
+			</if>
+			<if test="user_address!=null and user_address!=''">
+			<![CDATA[
+				user_address = #{user_address},
+			]]>
+			</if>
+			<if test="user_phone!=null and user_phone!=''">
+			<![CDATA[
+				user_phone = #{user_phone},
+			]]>
+			</if>
+			<if test="orders_flag!=0">
+			<![CDATA[
+				orders_flag = #{orders_flag}
+			]]>
+			</if>
+		</set>
+		<if test="orders_id!=0">
+		<![CDATA[
+			where orders_id = #{orders_id}
+		]]>
+		</if>
+		<if test="orders_no!=null and orders_no!=''">
+		<![CDATA[
+			where orders_no = #{orders_no}
+		]]>
+		</if>
+	</update>
+	
+	<update id="updateOrdersMoney" parameterType="Orders">
+		<![CDATA[
+			UPDATE orders SET orders_money = (select sum(d.goods_money) from orders_detail d where d.orders_no=#{orders_no})
+			 where orders_no = #{orders_no}
+		]]>
+	</update>
+
+	<select id="getOrders" parameterType="Orders" resultType="Orders">
+		<![CDATA[
+			SELECT * FROM orders
+		]]>
+		<where>
+			<if test="orders_id!=0">
+			<![CDATA[
+				orders_id = #{orders_id}
+			]]>
+			</if>
+			<if test="orders_no!=null and orders_no!=''">
+			<![CDATA[
+				and orders_no = #{orders_no}
+			]]>
+			</if>
+		</where>
+	</select>
+
+	<select id="listOrderss" parameterType="Orders" resultType="Orders">
+		<![CDATA[
+			SELECT * FROM (
+			SELECT * FROM orders
+		]]>
+		<where>
+			<if test="orders_id!=0">
+			<![CDATA[
+				orders_id = #{orders_id}
+			]]>
+			</if>
+			<if test="user_id!=0">
+			<![CDATA[
+				and user_id = #{user_id}
+			]]>
+			</if>
+			<if test="real_name!=null and real_name!=''">
+			<![CDATA[
+				and real_name like '%${real_name}%'
+			]]>
+			</if>
+			<if test="orders_no!=null and orders_no!=''">
+			<![CDATA[
+				and orders_no like '%${orders_no}%'
+			]]>
+			</if>
+			<if test="orders_date_min!=null and orders_date_min!=''">
+			<![CDATA[
+				and orders_date >= str_to_date(#{orders_date_min},'%Y-%m-%d')
+			]]>
+			</if>
+			<if test="orders_date_max!=null and orders_date_max!=''">
+			<![CDATA[
+				and orders_date <= str_to_date(#{orders_date_max},'%Y-%m-%d')
+			]]>
+			</if>
+			<if test="orders_flag!=0">
+			<![CDATA[
+				and orders_flag = #{orders_flag}
+			]]>
+			</if>
+		</where>
+		<![CDATA[
+			order by orders_date desc,orders_id asc) t
+		]]>
+		<if test="start!=-1">
+		<![CDATA[
+			Limit ${start},${limit}
+		]]>
+		</if>
+	</select>
+
+	<select id="listOrderssCount" parameterType="Orders" resultType="int">
+		<![CDATA[
+			SELECT count(*) FROM orders
+		]]>
+		<where>
+			<if test="orders_id!=0">
+			<![CDATA[
+				orders_id = #{orders_id}
+			]]>
+			</if>
+			<if test="user_id!=0">
+			<![CDATA[
+				and user_id = #{user_id}
+			]]>
+			</if>
+			<if test="real_name!=null and real_name!=''">
+			<![CDATA[
+				and real_name like '%${real_name}%'
+			]]>
+			</if>
+			<if test="orders_no!=null and orders_no!=''">
+			<![CDATA[
+				and orders_no like '%${orders_no}%'
+			]]>
+			</if>
+			<if test="orders_date_min!=null and orders_date_min!=''">
+			<![CDATA[
+				and orders_date >= str_to_date(#{orders_date_min},'%Y-%m-%d')
+			]]>
+			</if>
+			<if test="orders_date_max!=null and orders_date_max!=''">
+			<![CDATA[
+				and orders_date <= str_to_date(#{orders_date_max},'%Y-%m-%d')
+			]]>
+			</if>
+			<if test="orders_flag!=0">
+			<![CDATA[
+				and orders_flag = #{orders_flag}
+			]]>
+			</if>
+		</where>
+	</select>
+
+</mapper>

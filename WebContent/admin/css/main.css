@@ -1,0 +1,115 @@
+body{
+     margin:0px;
+	 font-size:12px;
+	 font-family:Arial, Helvetica, sans-serif;
+	 scrollbar-3dlight-color: #F0F0EE;
+	 scrollbar-arrow-color: #676662;
+	 scrollbar-base-color: #F0F0EE;
+	 scrollbar-darkshadow-color: #DDDDDD;
+	 scrollbar-face-color: #E0E0DD;
+	 scrollbar-highlight-color: #F0F0EE;
+	 scrollbar-shadow-color: #F0F0EE;
+	 scrollbar-track-color: #F5F5F5;
+}
+td{
+	 line-height:23px;
+	 font-size:12px;	 
+	 font-family:Arial, Helvetica, sans-serif;
+}
+
+.pageTitle{
+	background-color:#1078B0;
+	line-height:22px;
+	padding-right:5px;
+	border-bottom:1px solid #8f8f8f;
+}
+
+form{
+    margin:0px;
+}
+
+.table_list{
+    border-top: 1px solid #016586;
+    border-left: 1px solid #016586;
+}
+.table_list td {
+    border-right: 1px solid #016586;
+    border-bottom: 1px solid #016586;
+    empty-cells:show;
+}
+.listtitle td{
+    background-color:#1078B0;
+    height: 24px;
+    color:white;
+    font-size: 12px;
+    font-weight:bold;
+    white-space:nowrap;
+}
+.list0 td{
+	font-size: 12px;background-color:#FFFFFF;height: 24px;
+}
+.list1 td{
+	font-size: 12px;background-color:#edf0f4;height: 24px;
+}
+.list_mouseover td{
+    font-size: 12px;background-color:#DCEBFB;height: 24px;
+}
+.btnstyle {
+	CURSOR: pointer;
+	COLOR: white;
+	HEIGHT: 25px!important;
+	background-repeat: repeat-x;
+	border: 1px solid #6A9DE3;
+	background-color:#1078B0;
+	vertical-align:text-bottom;
+	border-radius: 5px 5px 5px 5px;
+}
+.editbody
+{
+    
+}
+.editbody td
+{
+    height: 25px;
+    font-size:12px;
+    color:#000000;
+    background-color:#DFEDFF;
+}
+.edittitleleft
+{
+    width:8px;
+    color:#000000;
+   background-color:#1078B0;
+}
+.edittitle
+{
+    font-size:12px;
+    color:#000000;
+   background-color:#1078B0;
+}
+.edittitleright
+{
+    width:8px;
+    color:#000000;
+   background-color:#1078B0;
+}
+.inputstyle{
+    vertical-align:text-bottom;
+    FONT-SIZE: 12px; 
+    COLOR: #465f87
+}
+.inputpagestyle{
+    width: 20px;
+    vertical-align:text-bottom;
+    color:gray;
+}
+.selectstyle {
+	FONT-SIZE: 12px; 
+	height:20px;
+	COLOR: #465f87;
+	vertical-align:text-bottom;
+}
+.alinkstyle{
+    color:blue;
+    vertical-align:bottom;
+}

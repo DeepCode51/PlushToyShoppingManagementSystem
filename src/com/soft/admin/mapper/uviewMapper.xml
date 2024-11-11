@@ -1,0 +1,137 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.soft.admin.dao.IUviewDao">
+
+	<insert id="addUview" parameterType="Uview">
+		<![CDATA[
+			insert into uview
+				values(null,#{user_id},#{goods_id},#{uview_date})
+		]]>
+	</insert>
+
+	<delete id="delUview" parameterType="int">
+		<![CDATA[
+			delete from uview where uview_id=#{uview_id}
+		]]>
+	</delete>
+
+	<delete id="delUviews" parameterType="int">
+		<![CDATA[
+			delete from uview where uview_id in 
+		]]>
+		<foreach collection="array" item="uview_ids"  open="(" separator="," close=")">
+			#{uview_ids}
+		</foreach>
+	</delete>
+
+	<update id="updateUview" parameterType="Uview">
+		<![CDATA[
+			UPDATE uview
+		]]>
+		<set>
+			<if test="">
+			<![CDATA[
+				
+			]]>
+			</if>
+		</set>
+		<![CDATA[
+			where uview_id = #{uview_id}
+		]]>
+	</update>
+
+	<select id="getUview" parameterType="Uview" resultType="Uview">
+		<![CDATA[
+			SELECT h.*,v.goods_name FROM uview h
+			  join member u on h.user_id=u.user_id
+			  join goods v on h.goods_id=v.goods_id
+		]]>
+		<where>
+			<if test="uview_id!=0">
+			<![CDATA[
+				uview_id = #{uview_id}
+			]]>
+			</if>
+			<if test="user_id!=0">
+			<![CDATA[
+				and h.user_id = #{user_id}
+			]]>
+			</if>
+			<if test="goods_id!=0">
+			<![CDATA[
+				and h.goods_id = #{goods_id}
+			]]>
+			</if>
+		</where>
+	</select>
+
+	<select id="listUviews" parameterType="Uview" resultType="Uview">
+		<![CDATA[
+			SELECT * FROM (
+			SELECT h.*,v.goods_name FROM uview h
+			  join member u on h.user_id=u.user_id
+			  join goods v on h.goods_id=v.goods_id
+		]]>
+		<where>
+			<if test="uview_id!=0">
+			<![CDATA[
+				uview_id = #{uview_id}
+			]]>
+			</if>
+			<if test="user_id!=0">
+			<![CDATA[
+				and h.user_id = #{user_id}
+			]]>
+			</if>
+			<if test="goods_id!=0">
+			<![CDATA[
+				and h.goods_id = #{goods_id}
+			]]>
+			</if>
+			<if test="goods_name!=null and goods_name!=''">
+			<![CDATA[
+				and goods_name like '%${goods_name}%'
+			]]>
+			</if>
+		</where>
+		<![CDATA[
+			order by uview_date desc,uview_id asc) t
+		]]>
+		<if test="start!=-1">
+		<![CDATA[
+			Limit ${start},${limit}
+		]]>
+		</if>
+	</select>
+
+	<select id="listUviewsCount" parameterType="Uview" resultType="int">
+		<![CDATA[
+			SELECT count(*) FROM uview h
+			  join member u on h.user_id=u.user_id
+			  join goods v on h.goods_id=v.goods_id
+		]]>
+		<where>
+			<if test="uview_id!=0">
+			<![CDATA[
+				uview_id = #{uview_id}
+			]]>
+			</if>
+			<if test="user_id!=0">
+			<![CDATA[
+				and h.user_id = #{user_id}
+			]]>
+			</if>
+			<if test="goods_id!=0">
+			<![CDATA[
+				and h.goods_id = #{goods_id}
+			]]>
+			</if>
+			<if test="goods_name!=null and goods_name!=''">
+			<![CDATA[
+				and goods_name like '%${goods_name}%'
+			]]>
+			</if>
+		</where>
+	</select>
+
+</mapper>

@@ -1,0 +1,184 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.soft.admin.dao.IMemberDao">
+
+	<insert id="addMember" parameterType="Member">
+		<![CDATA[
+			insert into member
+				values(null,#{user_name},#{user_pass},#{real_name},#{nick_name},#{user_sex},#{user_address},#{user_mail},#{user_phone},#{user_credit},#{member_type_id},#{reg_date})
+		]]>
+	</insert>
+
+	<delete id="delMember" parameterType="int">
+		<![CDATA[
+			delete from member where user_id=#{user_id}
+		]]>
+	</delete>
+
+	<delete id="delMembers" parameterType="int">
+		<![CDATA[
+			delete from member where user_id in 
+		]]>
+		<foreach collection="array" item="user_ids"  open="(" separator="," close=")">
+			#{user_ids}
+		</foreach>
+	</delete>
+
+	<update id="updateMember" parameterType="Member">
+		<![CDATA[
+			UPDATE member
+		]]>
+		<set>
+			<if test="user_pass!=null and user_pass!=''">
+			<![CDATA[
+				user_pass = #{user_pass},
+			]]>
+			</if>
+			<if test="real_name!=null and real_name!=''">
+			<![CDATA[
+				real_name = #{real_name},
+			]]>
+			</if>
+			<if test="nick_name!=null and nick_name!=''">
+			<![CDATA[
+				nick_name = #{nick_name},
+			]]>
+			</if>
+			<if test="user_sex!=0">
+			<![CDATA[
+				user_sex = #{user_sex},
+			]]>
+			</if>
+			<if test="user_address!=null and user_address!=''">
+			<![CDATA[
+				user_address = #{user_address},
+			]]>
+			</if>
+			<if test="user_mail!=null and user_mail!=''">
+			<![CDATA[
+				user_mail = #{user_mail},
+			]]>
+			</if>
+			<if test="user_phone!=null and user_phone!=''">
+			<![CDATA[
+				user_phone = #{user_phone},
+			]]>
+			</if>
+			<if test="user_credit!=0">
+			<![CDATA[
+				user_credit = #{user_credit},
+			]]>
+			</if>
+			<if test="member_type_id!=0">
+			<![CDATA[
+				member_type_id = #{member_type_id}
+			]]>
+			</if>
+		</set>
+		<![CDATA[
+			where user_id = #{user_id}
+		]]>
+	</update>
+
+	<select id="getMember" parameterType="Member" resultType="Member">
+		<![CDATA[
+			SELECT m.*,mt.member_type_name,IFNULL(mt.member_discard,1) member_discard FROM member m
+			  left join member_type mt on m.member_type_id=mt.member_type_id
+		]]>
+		<where>
+			<if test="user_id!=0">
+			<![CDATA[
+				user_id = #{user_id}
+			]]>
+			</if>
+			<if test="user_name!=null and user_name!=''">
+			<![CDATA[
+				and user_name = #{user_name}
+			]]>
+			</if>
+			<if test="user_pass!=null and user_pass!=''">
+			<![CDATA[
+				and user_pass = #{user_pass}
+			]]>
+			</if>
+		</where>
+	</select>
+
+	<select id="listMembers" parameterType="Member" resultType="Member">
+		<![CDATA[
+			SELECT * FROM (
+			SELECT m.*,mt.member_type_name,IFNULL(mt.member_discard,1) member_discard FROM member m
+			  left join member_type mt on m.member_type_id=mt.member_type_id
+		]]>
+		<where>
+			<if test="user_id!=0">
+			<![CDATA[
+				user_id = #{user_id}
+			]]>
+			</if>
+			<if test="user_name!=null and user_name!=''">
+			<![CDATA[
+				and user_name like '%${user_name}%'
+			]]>
+			</if>
+			<if test="real_name!=null and real_name!=''">
+			<![CDATA[
+				and real_name like '%${real_name}%'
+			]]>
+			</if>
+			<if test="nick_name!=null and nick_name!=''">
+			<![CDATA[
+				and nick_name like '%${nick_name}%'
+			]]>
+			</if>
+			<if test="member_type_id!=0">
+			<![CDATA[
+				and m.member_type_id = #{member_type_id}
+			]]>
+			</if>
+		</where>
+		<![CDATA[
+			order by user_id asc) t
+		]]>
+		<if test="start!=-1">
+		<![CDATA[
+			Limit ${start},${limit}
+		]]>
+		</if>
+	</select>
+
+	<select id="listMembersCount" parameterType="Member" resultType="int">
+		<![CDATA[
+			SELECT count(*) FROM member m
+			  left join member_type mt on m.member_type_id=mt.member_type_id
+		]]>
+		<where>
+			<if test="user_id!=0">
+			<![CDATA[
+				user_id = #{user_id}
+			]]>
+			</if>
+			<if test="user_name!=null and user_name!=''">
+			<![CDATA[
+				and user_name like '%${user_name}%'
+			]]>
+			</if>
+			<if test="real_name!=null and real_name!=''">
+			<![CDATA[
+				and real_name like '%${real_name}%'
+			]]>
+			</if>
+			<if test="nick_name!=null and nick_name!=''">
+			<![CDATA[
+				and nick_name like '%${nick_name}%'
+			]]>
+			</if>
+			<if test="member_type_id!=0">
+			<![CDATA[
+				and m.member_type_id = #{member_type_id}
+			]]>
+			</if>
+		</where>
+	</select>
+
+</mapper>

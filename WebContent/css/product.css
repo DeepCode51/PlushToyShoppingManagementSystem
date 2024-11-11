@@ -1,0 +1,74 @@
+
+
+#product_info .productShow{
+	margin-top:5px;
+	width:958px;
+	border:1px solid #dbcdbd;
+	overflow:hidden;
+}
+
+#product_info .productShow  .title{
+	line-height:50px;
+	width:900px;
+	margin-left:10px;
+	color:#A88D5A;
+	font-size:16px;
+	font-weight:bold;
+	overflow:hidden;
+}
+
+#product_info .productShow .typehr{
+    height:5px;
+	width:900px;
+	margin-left:10px;
+	background:url('../images/yun_hr.gif') repeat-x left center; 
+	overflow:hidden;
+}
+
+#product_info .productShow .pictext{
+	margin-top:5px;
+	width:900px;
+	height:260px;
+	overflow:hidden;
+}
+
+#product_info .productShow .pic{
+	float:left;
+	width:320px;
+	height:260px;
+	line-height:260px;
+	text-align:center;
+	overflow:hidden;
+}
+
+#product_info .productShow .text{
+	float:left;
+	margin-left:50px;
+	width:500px;
+	height:260px;
+	color:#A88D5A;
+	overflow:hidden;
+}
+
+#product_info .productShow .textTop{
+	height:120px;
+	line-height:30px;
+	text-align:left;
+	overflow:hidden;
+}
+
+#product_info .productShow .textBtn{
+	height:180px;
+	line-height:80px;
+	text-align:left;
+	font-size:14px;
+	overflow:hidden;
+}
+
+#product_info .productShow .intro{
+	margin-top:5px;
+	padding-left:20px;
+	width:690px;
+	line-height:30px;
+	overflow:hidden;
+}

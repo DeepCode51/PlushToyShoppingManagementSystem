@@ -1,0 +1,159 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.soft.admin.dao.IEvaluateDao">
+
+	<insert id="addEvaluate" parameterType="Evaluate">
+		<![CDATA[
+			insert into evaluate
+				values(null,#{orders_no},#{user_id},#{nick_name},#{goods_id},#{evaluate_date},#{evaluate_level},#{evaluate_content})
+		]]>
+	</insert>
+	
+	<insert id="addEvaluateBatch" parameterType="Evaluate">
+		<![CDATA[
+			INSERT INTO evaluate(orders_no,user_id,nick_name,goods_id,evaluate_date,evaluate_level,evaluate_content)
+				   SELECT #{orders_no},#{user_id},#{nick_name},goods_id,#{evaluate_date},#{evaluate_level},#{evaluate_content}
+				     FROM orders_detail WHERE orders_no=#{orders_no}
+		]]>
+	</insert>
+
+	<delete id="delEvaluate" parameterType="int">
+		<![CDATA[
+			delete from evaluate where evaluate_id=#{evaluate_id}
+		]]>
+	</delete>
+
+	<delete id="delEvaluates" parameterType="int">
+		<![CDATA[
+			delete from evaluate where evaluate_id in 
+		]]>
+		<foreach collection="array" item="evaluate_ids"  open="(" separator="," close=")">
+			#{evaluate_ids}
+		</foreach>
+	</delete>
+
+	<update id="updateEvaluate" parameterType="Evaluate">
+		<![CDATA[
+			UPDATE evaluate
+		]]>
+		<set>
+			<if test="">
+			<![CDATA[
+				
+			]]>
+			</if>
+		</set>
+		<![CDATA[
+			where evaluate_id = #{evaluate_id}
+		]]>
+	</update>
+
+	<select id="getEvaluate" parameterType="Evaluate" resultType="Evaluate">
+		<![CDATA[
+			SELECT * FROM evaluate
+		]]>
+		<where>
+			<if test="evaluate_id!=0">
+			<![CDATA[
+				evaluate_id = #{evaluate_id}
+			]]>
+			</if>
+			<if test="user_id!=0">
+			<![CDATA[
+				and user_id = #{user_id}
+			]]>
+			</if>
+			<if test="orders_no!=null and orders_no!=''">
+			<![CDATA[
+				and orders_no = #{orders_no}
+			]]>
+			</if>
+		</where>
+	</select>
+
+	<select id="listEvaluates" parameterType="Evaluate" resultType="Evaluate">
+		<![CDATA[
+			SELECT * FROM (
+			SELECT e.*,g.goods_name FROM evaluate e join goods g on e.goods_id=g.goods_id
+		]]>
+		<where>
+			<if test="evaluate_id!=0">
+			<![CDATA[
+				evaluate_id = #{evaluate_id}
+			]]>
+			</if>
+			<if test="user_id!=0">
+			<![CDATA[
+				and user_id = #{user_id}
+			]]>
+			</if>
+			<if test="nick_name!=null and nick_name!=''">
+			<![CDATA[
+				and nick_name like '%${nick_name}%'
+			]]>
+			</if>
+			<if test="orders_no!=null and orders_no!=''">
+			<![CDATA[
+				and orders_no = #{orders_no}
+			]]>
+			</if>
+			<if test="goods_id!=0">
+			<![CDATA[
+				and e.goods_id = #{goods_id}
+			]]>
+			</if>
+			<if test="goods_name!=null and goods_name!=''">
+			<![CDATA[
+				and g.goods_name like '%${goods_name}%'
+			]]>
+			</if>
+		</where>
+		<![CDATA[
+			order by evaluate_date desc,evaluate_id asc) t
+		]]>
+		<if test="start!=-1">
+		<![CDATA[
+			Limit ${start},${limit}
+		]]>
+		</if>
+	</select>
+
+	<select id="listEvaluatesCount" parameterType="Evaluate" resultType="int">
+		<![CDATA[
+			SELECT count(*) FROM evaluate e join goods g on e.goods_id=g.goods_id
+		]]>
+		<where>
+			<if test="evaluate_id!=0">
+			<![CDATA[
+				evaluate_id = #{evaluate_id}
+			]]>
+			</if>
+			<if test="user_id!=0">
+			<![CDATA[
+				and user_id = #{user_id}
+			]]>
+			</if>
+			<if test="nick_name!=null and nick_name!=''">
+			<![CDATA[
+				and nick_name like '%${nick_name}%'
+			]]>
+			</if>
+			<if test="orders_no!=null and orders_no!=''">
+			<![CDATA[
+				and orders_no = #{orders_no}
+			]]>
+			</if>
+			<if test="goods_id!=0">
+			<![CDATA[
+				and e.goods_id = #{goods_id}
+			]]>
+			</if>
+			<if test="goods_name!=null and goods_name!=''">
+			<![CDATA[
+				and g.goods_name like '%${goods_name}%'
+			]]>
+			</if>
+		</where>
+	</select>
+
+</mapper>

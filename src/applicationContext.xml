@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:p="http://www.springframework.org/schema/p"
+	xmlns:aop="http://www.springframework.org/schema/aop"
+	xmlns:context="http://www.springframework.org/schema/context" xmlns:tx="http://www.springframework.org/schema/tx"
+	xsi:schemaLocation="
+		http://www.springframework.org/schema/beans
+		http://www.springframework.org/schema/beans/spring-beans-4.0.xsd
+		http://www.springframework.org/schema/aop 
+        http://www.springframework.org/schema/aop/spring-aop-4.0.xsd 
+		http://www.springframework.org/schema/context
+		http://www.springframework.org/schema/context/spring-context-4.0.xsd
+		http://www.springframework.org/schema/tx
+		http://www.springframework.org/schema/tx/spring-tx-4.0.xsd">
+
+	<!-- 自动扫描和添加注解 -->
+	<context:component-scan base-package="com.soft.admin,com.soft.page">
+		<context:exclude-filter type="annotation"
+			expression="org.springframework.stereotype.Controller" />
+	</context:component-scan>
+	
+	<!-- 启动AOP支持 -->
+	<aop:aspectj-autoproxy/>
+
+	<!-- 1. 数据源 : BasicDataSource -->
+	<bean id="propertyConfig" 
+		class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer"> 
+		<property name="location"> 
+			<value>classpath:prop/database.properties</value> 
+		</property> 
+	</bean>
+	
+	<bean id="dataSource"
+		class="org.apache.commons.dbcp.BasicDataSource">
+		<property name="driverClassName">
+			<value>${driverClassName}</value>
+		</property>
+		<property name="url">
+			<value>${url}</value>
+		</property>
+		<property name="username">
+			<value>${username}</value>
+		</property>
+		<property name="password">
+			<value>${password}</value>
+		</property>
+		<property name="initialSize">
+			<value>${initialSize}</value>
+		</property> 
+	    <property name="minIdle">
+			<value>${minIdle}</value>
+		</property>  
+	    <property name="maxIdle">
+			<value>${maxIdle}</value>
+		</property>   
+	    <property name="maxActive">
+			<value>${maxActive}</value>
+		</property>    
+	    <property name="maxWait">
+			<value>${maxWait}</value>
+		</property>  
+	</bean>
+
+	<!--
+		2. mybatis的SqlSession的工厂: SqlSessionFactoryBean 
+	-->
+	<bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
+		<property name="dataSource" ref="dataSource"></property>
+		<!-- <property name="configLocation" value="classpath:mybatis-config.xml" /> --> 
+		<!-- 自动扫描maaper.xml文件 -->
+		<property name="mapperLocations" value="classpath:com/soft/admin/mapper/*.xml"></property>
+		<!-- 自动扫描需要定义类别名的包，将包内的JAVA类的类名作为类别名 -->
+		<property name="typeAliasesPackage" value="com.soft.admin.domain"></property>
+	</bean>
+
+	<!--
+		3. mybatis自动扫描加载Sql映射文件/接口 : MapperScannerConfigurer sqlSessionFactory
+
+		basePackage:指定sql映射文件/接口所在的包（自动扫描）
+	-->
+	<bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
+		<property name="basePackage" value="com.soft.admin.dao"></property>
+		<property name="sqlSessionFactoryBeanName" value="sqlSessionFactory"></property>
+	</bean>
+
+	<!-- 4.配置事务切面Bean,指定事务管理器 -->
+    <!-- 配置事务管理器 -->
+    <bean id="transactionManager"
+        class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+        <property name="dataSource" ref="dataSource"></property>
+    </bean>
+	
+	
+	<tx:advice id="txAdvice" transaction-manager="transactionManager">
+		<!-- 用于配置详细的事务语义 -->
+		<tx:attributes>
+			<!-- 所有以'get'开头的方法是read-only的 -->
+			<tx:method name="get*" read-only="true"/>
+			<!-- 其他方法使用默认的事务设置 -->
+			<tx:method name="*"/>
+		</tx:attributes>
+	</tx:advice>
+
+	<aop:config>
+		<!-- 配置一个切入点，匹配com.qcsz.*.biz包下所有方法的执行 -->
+		<aop:pointcut id="nklPointcut" expression="execution(* com.soft.*.manager.*.*(..))" /> 
+		<!-- 指定在txAdvice切入点应用txAdvice事务切面 -->
+		<aop:advisor advice-ref="txAdvice" 
+			pointcut-ref="nklPointcut"/>
+	</aop:config>
+
+</beans>

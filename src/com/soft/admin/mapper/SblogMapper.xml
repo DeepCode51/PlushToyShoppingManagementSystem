@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.soft.admin.dao.ISblogDao">
+
+	<insert id="addSblog" parameterType="Sblog">
+		<![CDATA[
+			insert into sblog
+				values(null,#{goods_id},#{user_id},#{sblog_content},#{sblog_date})
+		]]>
+	</insert>
+
+	<delete id="delSblog" parameterType="int">
+		<![CDATA[
+			delete from sblog where sblog_id=#{sblog_id}
+		]]>
+	</delete>
+
+	<delete id="delSblogs" parameterType="int">
+		<![CDATA[
+			delete from sblog where sblog_id in 
+		]]>
+		<foreach collection="array" item="sblog_ids"  open="(" separator="," close=")">
+			#{sblog_ids}
+		</foreach>
+	</delete>
+
+	<update id="updateSblog" parameterType="Sblog">
+		<![CDATA[
+			UPDATE sblog
+		]]>
+		<set>
+			<if test="sblog_content!=null and sblog_content!=''">
+			<![CDATA[
+				 sblog_content = #{sblog_content}
+			]]>
+			</if>
+		</set>
+		<![CDATA[
+			where sblog_id = #{sblog_id}
+		]]>
+	</update>
+
+	<select id="getSblog" parameterType="Sblog" resultType="Sblog">
+		<![CDATA[
+			SELECT s.*,u.user_name FROM sblog s 
+			  join member u on s.user_id=u.user_id
+		]]>
+		<where>
+			<if test="sblog_id!=0">
+			<![CDATA[
+				sblog_id = #{sblog_id}
+			]]>
+			</if>
+		</where>
+	</select>
+
+	<select id="listSblogs" parameterType="Sblog" resultType="Sblog">
+		<![CDATA[
+			SELECT * FROM (
+			SELECT s.*,u.user_name FROM sblog s 
+			  join member u on s.user_id=u.user_id
+		]]>
+		<where>
+			<if test="sblog_id!=0">
+			<![CDATA[
+				sblog_id = #{sblog_id}
+			]]>
+			</if>
+			<if test="user_id!=0">
+			<![CDATA[
+				and s.user_id = #{user_id}
+			]]>
+			</if>
+			<if test="user_name!=null and user_name!=''">
+			<![CDATA[
+				and u.user_name like '%${user_name}%'
+			]]>
+			</if>
+		</where>
+		<![CDATA[
+			order by sblog_date desc,sblog_id asc) t
+		]]>
+		<if test="start!=-1">
+		<![CDATA[
+			Limit ${start},${limit}
+		]]>
+		</if>
+	</select>
+
+	<select id="listSblogsCount" parameterType="Sblog" resultType="int">
+		<![CDATA[
+			SELECT count(*) FROM sblog s
+			  join member u on s.user_id=u.user_id
+		]]> 
+		<where>
+			<if test="sblog_id!=0">
+			<![CDATA[
+				sblog_id = #{sblog_id}
+			]]>
+			</if>
+			<if test="user_id!=0">
+			<![CDATA[
+				and s.user_id = #{user_id}
+			]]>
+			</if>
+			<if test="user_name!=null and user_name!=''">
+			<![CDATA[
+				and u.user_name like '%${user_name}%'
+			]]>
+			</if>
+		</where>
+	</select>
+
+</mapper>

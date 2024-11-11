@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.soft.admin.dao.IMemberTypeDao">
+
+	<insert id="addMemberType" parameterType="MemberType">
+		<![CDATA[
+			insert into member_type
+				values(null,#{member_type_name},#{credit_start},#{credit_end},#{member_discard})
+		]]>
+	</insert>
+
+	<delete id="delMemberType" parameterType="int">
+		<![CDATA[
+			delete from member_type where member_type_id=#{member_type_id}
+		]]>
+	</delete>
+
+	<delete id="delMemberTypes" parameterType="int">
+		<![CDATA[
+			delete from member_type where member_type_id in 
+		]]>
+		<foreach collection="array" item="member_type_ids"  open="(" separator="," close=")">
+			#{member_type_ids}
+		</foreach>
+	</delete>
+
+	<update id="updateMemberType" parameterType="MemberType">
+		<![CDATA[
+			UPDATE member_type
+			  set
+			  member_type_name = #{member_type_name},credit_start = #{credit_start},credit_end = #{credit_end},member_discard = #{member_discard}
+		]]>
+		<![CDATA[
+			where member_type_id = #{member_type_id}
+		]]>
+	</update>
+
+	<select id="getMemberType" parameterType="MemberType" resultType="MemberType">
+		<![CDATA[
+			SELECT * FROM member_type
+		]]>
+		<where>
+			<if test="member_type_id!=0">
+			<![CDATA[
+				member_type_id = #{member_type_id}
+			]]>
+			</if>
+			<if test="member_type_name!=null and member_type_name!=''">
+			<![CDATA[
+				and member_type_name = #{member_type_name}
+			]]>
+			</if>
+		</where>
+	</select>
+
+	<select id="listMemberTypes" parameterType="MemberType" resultType="MemberType">
+		<![CDATA[
+			SELECT * FROM (
+			SELECT * FROM member_type
+		]]>
+		<where>
+			<if test="member_type_id!=0">
+			<![CDATA[
+				member_type_id = #{member_type_id}
+			]]>
+			</if>
+			<if test="member_type_name!=null and member_type_name!=''">
+			<![CDATA[
+				and member_type_name like '%${member_type_name}%'
+			]]>
+			</if>
+		</where>
+		<![CDATA[
+			order by member_discard desc,member_type_id asc) t
+		]]>
+		<if test="start!=-1">
+		<![CDATA[
+			Limit ${start},${limit}
+		]]>
+		</if>
+	</select>
+
+	<select id="listMemberTypesCount" parameterType="MemberType" resultType="int">
+		<![CDATA[
+			SELECT count(*) FROM member_type
+		]]>
+		<where>
+			<if test="member_type_id!=0">
+			<![CDATA[
+				member_type_id = #{member_type_id}
+			]]>
+			</if>
+			<if test="member_type_name!=null and member_type_name!=''">
+			<![CDATA[
+				and member_type_name like '%${member_type_name}%'
+			]]>
+			</if>
+		</where>
+	</select>
+
+</mapper>

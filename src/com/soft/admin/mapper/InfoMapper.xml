@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.soft.admin.dao.IInfoDao">
+
+	<insert id="addInfo" parameterType="Info">
+		<![CDATA[
+			insert into INFO
+(info_id,info_content)
+				values(#{info_id},#{info_content})
+		]]>
+	</insert>
+
+	<delete id="delInfo" parameterType="String">
+		<![CDATA[
+			delete from INFO where info_id=#{info_id}
+		]]>
+	</delete>
+
+	<delete id="delInfos">
+		<![CDATA[
+			delete from INFO where info_id in 
+		]]>
+		<foreach collection="array" item="info_ids"  open="(" separator="," close=")">
+			#{info_ids}
+		</foreach>
+	</delete>
+
+	<update id="updateInfo" parameterType="Info">
+		<![CDATA[
+			UPDATE INFO
+		]]>
+		<set>
+			<if test="info_content!=null and info_content!=''">
+			<![CDATA[
+				info_content = #{info_content}
+			]]>
+			</if>
+		</set>
+		<![CDATA[
+			where info_id = #{info_id}
+		]]>
+	</update>
+
+	<select id="getInfo" parameterType="Info" resultType="Info">
+		<![CDATA[
+			SELECT t.*
+			  FROM INFO t 
+		]]>
+		<where>
+			<if test="info_id!=null and info_id!=''">
+			<![CDATA[
+				info_id = #{info_id}
+			]]>
+			</if>
+		</where>
+	</select>
+
+	<select id="listInfos" parameterType="Info" resultType="Info">
+		<![CDATA[
+			SELECT * FROM (
+			SELECT *
+			  FROM INFO 
+		]]>
+		<where>
+			<if test="info_id!=null and info_id!=''">
+			<![CDATA[
+				info_id = #{info_id}
+			]]>
+			</if>
+		</where>
+		<![CDATA[
+			order by info_id asc) t
+		]]>
+		<if test="start!=-1">
+		<![CDATA[
+			Limit ${start},${limit}
+		]]>
+		</if>
+	</select>
+
+	<select id="listInfosCount" parameterType="Info" resultType="int">
+		<![CDATA[
+			SELECT count(*) FROM INFO
+		]]>
+		<where>
+			<if test="info_id!=null and info_id!=''">
+			<![CDATA[
+				info_id = #{info_id}
+			]]>
+			</if>
+		</where>
+	</select>
+
+</mapper>
